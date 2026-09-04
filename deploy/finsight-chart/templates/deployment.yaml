@@ -62,13 +62,3 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
----
-{{- if .Values.serviceAccount.create }}
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ include "finsight.serviceAccountName" . }}
-  labels:
-    {{- include "finsight.labels" . | nindent 4 }}
-automountServiceAccountToken: false
-{{- end }}

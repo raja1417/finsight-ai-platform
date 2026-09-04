@@ -1,3 +1,4 @@
+# Replace the example account IDs and role names before applying this configuration.
 environment         = "dev"
 aws_region          = "us-east-1"
 azure_location      = "eastus"
