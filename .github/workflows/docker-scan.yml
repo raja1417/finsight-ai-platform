@@ -1,0 +1,19 @@
+name: Scan container image
+
+on:
+  workflow_run:
+    workflows: ["Build and push container"]
+    types: [completed]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: raja1417/github-actions-workflows/.github/workflows/docker-scan.yml@v1
+    with:
+      image: ghcr.io/raja1417/finsight-container:${{ github.event.workflow_run.head_sha }}
+      severity: CRITICAL,HIGH
+      fail-on-vulnerability: true

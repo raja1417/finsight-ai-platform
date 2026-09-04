@@ -1,0 +1,25 @@
+name: Infrastructure pull request
+
+on:
+  pull_request:
+    paths:
+      - infrastructure/**
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    uses: raja1417/github-actions-workflows/.github/workflows/terraform-validate.yml@v1
+    with:
+      working-directory: infrastructure
+      init-args: -input=false
+
+  plan:
+    needs: validate
+    uses: raja1417/github-actions-workflows/.github/workflows/terraform-plan.yml@v1
+    with:
+      working-directory: infrastructure
+      init-args: -input=false -backend=false
+    secrets: inherit

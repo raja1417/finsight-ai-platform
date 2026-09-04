@@ -1,0 +1,19 @@
+name: Validate Helm chart
+
+on:
+  pull_request:
+    paths:
+      - deploy/**
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    uses: raja1417/github-actions-workflows/.github/workflows/helm-validate.yml@v1
+    with:
+      chart-path: deploy/finsight-chart
+      values-file: values-dev.yaml
+      run-checkov: true
+      checkov-framework: kubernetes

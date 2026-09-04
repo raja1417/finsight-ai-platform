@@ -1,0 +1,13 @@
+# Copy values to dev.tfvars or prod.tfvars and replace the account IDs and role names.
+environment         = "dev"
+aws_region          = "us-east-1"
+azure_location      = "eastus"
+vpc_cidr            = "10.10.0.0/16"
+cluster_role_arn    = "arn:aws:iam::<account-id>:role/finsight-eks-cluster"
+node_role_arn       = "arn:aws:iam::<account-id>:role/finsight-eks-node"
+node_instance_types = ["t3.medium"]
+node_desired_size   = 2
+node_min_size       = 2
+node_max_size       = 4
+rds_instance_class  = "db.t3.micro"
+rds_master_username = "replace_me"

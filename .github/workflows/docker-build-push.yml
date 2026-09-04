@@ -1,0 +1,27 @@
+name: Build and push container
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    uses: raja1417/github-actions-workflows/.github/workflows/docker-build-push.yml@v1
+    with:
+      image: ghcr.io/raja1417/finsight-container
+      tags: ghcr.io/raja1417/finsight-container:latest,ghcr.io/raja1417/finsight-container:${{ github.sha }}
+      push: true
+    secrets:
+      registry-username: ${{ github.actor }}
+      registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  summary:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Published ghcr.io/raja1417/finsight-container@${{ needs.build.outputs.digest }}" >> "$GITHUB_STEP_SUMMARY"
