@@ -1,0 +1,17 @@
+name: Scan container image
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    uses: raja1417/github-actions-workflows/.github/workflows/docker-scan.yml@v1
+    with:
+      image: ghcr.io/raja1417/finsight-container:latest
+      severity: CRITICAL,HIGH
+      fail-on-vulnerability: true

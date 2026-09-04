@@ -1,0 +1,24 @@
+name: Deploy infrastructure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - infrastructure/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: infrastructure-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    uses: raja1417/github-actions-workflows/.github/workflows/terraform-apply.yml@v1
+    with:
+      working-directory: infrastructure
+      environment: production
+      artifact-name: terraform-plan
+      plan-file: tfplan
+    secrets: inherit

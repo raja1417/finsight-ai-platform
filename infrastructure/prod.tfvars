@@ -1,0 +1,12 @@
+environment         = "prod"
+aws_region          = "us-east-1"
+azure_location      = "eastus"
+vpc_cidr            = "10.20.0.0/16"
+cluster_role_arn    = "arn:aws:iam::123456789012:role/finsight-prod-eks-cluster"
+node_role_arn       = "arn:aws:iam::123456789012:role/finsight-prod-eks-node"
+node_instance_types = ["t3.large"]
+node_desired_size   = 2
+node_min_size       = 2
+node_max_size       = 3
+rds_instance_class  = "db.t3.small"
+rds_master_username = "finsight_admin"

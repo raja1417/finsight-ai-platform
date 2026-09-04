@@ -1,0 +1,36 @@
+name: Deploy Helm chart
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - app/**
+      - deploy/**
+      - Dockerfile
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-dev:
+    uses: raja1417/github-actions-workflows/.github/workflows/helm-deploy.yml@v1
+    with:
+      release-name: finsight
+      chart-path: deploy/finsight-chart
+      namespace: finsight-dev
+      values-file: values-dev.yaml
+      environment: development
+    secrets:
+      kubeconfig: ${{ secrets.KUBECONFIG_DEV }}
+
+  deploy-prod:
+    needs: deploy-dev
+    uses: raja1417/github-actions-workflows/.github/workflows/helm-deploy.yml@v1
+    with:
+      release-name: finsight
+      chart-path: deploy/finsight-chart
+      namespace: finsight-prod
+      values-file: values-prod.yaml
+      environment: production
+    secrets:
+      kubeconfig: ${{ secrets.KUBECONFIG_PROD }}

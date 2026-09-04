@@ -1,0 +1,26 @@
+name: Infrastructure security scans
+
+on:
+  pull_request:
+    paths:
+      - infrastructure/**
+      - deploy/**
+      - Dockerfile
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  tfsec:
+    uses: raja1417/github-actions-workflows/.github/workflows/tfsec-scan.yml@v1
+    with:
+      working-directory: infrastructure
+      soft-fail: false
+
+  checkov:
+    uses: raja1417/github-actions-workflows/.github/workflows/checkov-scan.yml@v1
+    with:
+      directory: infrastructure
+      framework: terraform
+      soft-fail: false
