@@ -1,6 +1,6 @@
-replicaCount: 2
+replicaCount: 1
 config:
   environment: production
 autoscaling:
-  minReplicas: 2
-  maxReplicas: 3
+  minReplicas: 1
+  maxReplicas: 2

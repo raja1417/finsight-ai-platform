@@ -16,7 +16,7 @@ def get_portfolio_service() -> PortfolioService:
 
 
 @app.get("/healthz", tags=["health"])
-def health(settings: Settings = Depends(get_settings)) -> dict[str, str]:
+def health(settings: Annotated[Settings, Depends(get_settings)]) -> dict[str, str]:
     return {"status": "ok", "environment": settings.environment}
 
 
