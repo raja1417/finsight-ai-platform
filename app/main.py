@@ -5,7 +5,7 @@ from app.models import Portfolio, PortfolioAnalytics, Transaction, TransactionCr
 from app.services import PortfolioService
 
 app = FastAPI(title="FinSight AI Platform", version="1.0.0")
-portfolio_service = PortfolioService()
+portfolio_service = PortfolioService(get_settings().database_url)
 
 
 @app.get("/healthz", tags=["health"])

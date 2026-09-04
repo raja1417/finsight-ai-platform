@@ -5,7 +5,9 @@ metadata:
   labels:
     {{- include "finsight.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "finsight.name" . }}
@@ -54,6 +56,12 @@ spec:
             httpGet:
               path: /healthz
               port: http
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
 ---
 {{- if .Values.serviceAccount.create }}
 apiVersion: v1

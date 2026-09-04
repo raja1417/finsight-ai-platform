@@ -2,7 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class TransactionType(str, Enum):
@@ -32,6 +32,13 @@ class TransactionCreate(BaseModel):
     quantity: Decimal | None = Field(default=None, gt=0)
     amount: Decimal = Field(gt=0)
     occurred_at: datetime
+
+    @model_validator(mode="after")
+    def validate_security_transaction_fields(self) -> "TransactionCreate":
+        if self.transaction_type in {TransactionType.BUY, TransactionType.SELL}:
+            if self.symbol is None or self.quantity is None:
+                raise ValueError("symbol and quantity are required for buy and sell transactions")
+        return self
 
 
 class Transaction(TransactionCreate):

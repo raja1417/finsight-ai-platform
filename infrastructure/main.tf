@@ -68,9 +68,9 @@ module "eks" {
   security_group_ids = [module.application_security_group.id]
   node_groups = {
     application = {
-      desired_size  = var.node_desired_size
-      min_size      = var.node_min_size
-      max_size      = var.node_max_size
+      desired_size   = var.node_desired_size
+      min_size       = var.node_min_size
+      max_size       = var.node_max_size
       instance_types = var.node_instance_types
     }
   }
